@@ -470,7 +470,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
         else:
             await update.message.reply_text(
-                "Цены на эту модель пока не загружены 🙏",
+                "Данный бот содержит цены на iPhone и Samsung, если вас интересует что-то другое, напишите нам в лс @DrygoeMesto23🙏",
                 reply_to_message_id=update.message.message_id
             )
         return
