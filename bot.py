@@ -15,13 +15,22 @@ ADMIN_IDS = {
 }
 
 SIM_MAP = {
-    "🇨🇳": "2 SIM (физические)",
-    "🇭🇰": "2 SIM (физические)",
+    "🇨🇳": "2 SIM (физические, eSIM нет)",
+    "🇭🇰": "2 SIM (физические, eSIM нет)",
+    "🇲🇴": "2 SIM (физические, eSIM нет)",
+
+    "🇺🇸": "Только eSIM (без физической SIM)",
+    "🇪🇺": "Только eSIM (без физической SIM)",
+
+    "🇬🇧": "1 SIM + eSIM",
+    "🇦🇪": "1 SIM + eSIM",
+    "🇸🇦": "1 SIM + eSIM",
     "🇮🇳": "1 SIM + eSIM",
     "🇯🇵": "1 SIM + eSIM",
-    "🇦🇪": "1 SIM + eSIM",
-    "🇪🇺": "1 SIM + eSIM",
-    "🇺🇸": "Только eSIM (без физической SIM)",
+    "🇰🇷": "1 SIM + eSIM",
+    "🇨🇦": "1 SIM + eSIM",
+    "🇦🇺": "1 SIM + eSIM",
+    "🇸🇬": "1 SIM + eSIM",
 }
 
 PRICES_FILE = "prices.json"
