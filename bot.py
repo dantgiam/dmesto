@@ -246,21 +246,23 @@ def parse_supplier_text(text: str) -> dict:
         price_match = price_pattern.search(line)
         if not price_match:
             continue
-        price_str = price_match.group(1).replace(".", "").replace(",", "")
-        try:
-            price_int = add_margin(int(price_str), category or "")
-        except ValueError:
-            continue
 
         # Часть строки до цены — содержит модель, память, цвет
         line_no_price = line[:price_match.start()].strip()
         line_lower = line_no_price.lower()
 
-        # Определяем бренд и категорию (Samsung первым — иначе A17/S17 матчится как iPhone 17)
+        # Определяем категорию (Samsung первым — иначе A17/S17 матчится как iPhone 17)
         category = detect_samsung_category(line_lower)
         if not category:
             category = detect_iphone_category(line_lower)
         if not category:
+            continue
+
+        # Теперь считаем цену с нужной наценкой
+        price_str = price_match.group(1).replace(".", "").replace(",", "")
+        try:
+            price_int = add_margin(int(price_str), category)
+        except ValueError:
             continue
 
         # Извлекаем память
@@ -273,7 +275,7 @@ def parse_supplier_text(text: str) -> dict:
         # Убираем GB/Tb/TB остатки
         after_mem = re.sub(r'(?i)^[\s/]*(gb|tb)?[\s–\-]*', '', after_mem)
         color_part = after_mem.strip().strip('–- ').strip()
-        # Убираем эмодзи цветов (🖤⚪🔵 и т.п.) из цвета — они не нужны в тексте
+        # Убираем эмодзи цветов из цвета
         color_part = re.sub(r'[\U0001F300-\U0001FFFF]', '', color_part).strip()
         if not color_part:
             color_part = "—"
