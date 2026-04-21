@@ -20,13 +20,13 @@ SIM_MAP = {
     "🇲🇴": "2 SIM (физические, eSIM нет)",
 
     "🇺🇸": "Только eSIM (без физической SIM)",
-    "🇪🇺": "Только eSIM (без физической SIM)",
+    "🇯🇵": "Только eSIM (без физической SIM)",
 
     "🇬🇧": "1 SIM + eSIM",
     "🇦🇪": "1 SIM + eSIM",
     "🇸🇦": "1 SIM + eSIM",
     "🇮🇳": "1 SIM + eSIM",
-    "🇯🇵": "1 SIM + eSIM",
+    "🇪🇺": "1 SIM + eSIM",
     "🇰🇷": "1 SIM + eSIM",
     "🇨🇦": "1 SIM + eSIM",
     "🇦🇺": "1 SIM + eSIM",
@@ -35,6 +35,7 @@ SIM_MAP = {
 
 PRICES_FILE = "prices.json"
 PRICE_INCREASE = 5000
+SAMSUNG_PRICE_INCREASE = 10000
 WRITE_MODE = False
 THRESHOLD = 85
 
@@ -123,7 +124,9 @@ def merge_prices(base: dict, new: dict) -> dict:
 
 # -------------------- Парсинг прайса --------------------
 
-def add_margin(price: int) -> int:
+def add_margin(price: int, category: str = "") -> int:
+    if category and detect_samsung_category(category.lower()):
+        return price + SAMSUNG_PRICE_INCREASE
     return price + PRICE_INCREASE
 
 def parse_price_from_entry(entry: str) -> int:
@@ -245,7 +248,7 @@ def parse_supplier_text(text: str) -> dict:
             continue
         price_str = price_match.group(1).replace(".", "").replace(",", "")
         try:
-            price_int = add_margin(int(price_str))
+            price_int = add_margin(int(price_str), category or "")
         except ValueError:
             continue
 
